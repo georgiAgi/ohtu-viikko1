@@ -61,8 +61,72 @@ public class VarastoTest {
 
         varasto.otaVarastosta(2);
 
-        // varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
+    
+    @Test
+    public void tilavuusOnAnnettuOikein() {
+        double tilavuus = -2.3;
+        Varasto varasto = new Varasto(tilavuus);
+        
+        assertEquals(0.0, varasto.getTilavuus(), vertailuTarkkuus);
+    }
 
+    @Test
+    public void lisättäväMääräOnOikein() {
+        varasto.lisaaVarastoon(-1.5);
+        
+        assertEquals(0.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void saldoTäynnäJosLisätäänYliKapasiteetin() {
+        varasto.lisaaVarastoon(15.5);
+
+        assertEquals(10.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void josOtetaanNegatiivinenMääräEiOtetaMitään() {
+        varasto.otaVarastosta(-5.5);
+
+        assertEquals(0.0, varasto.otaVarastosta(-5.5), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void annetaanMitäVoidaan() {
+        varasto.lisaaVarastoon(7.8);
+        varasto.otaVarastosta(8.5);
+
+        assertEquals(0.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void tulostusOnOikein() {
+        varasto.lisaaVarastoon(7.8);
+
+        assertEquals("saldo = 7.8, vielä tilaa 2.2", varasto.toString());
+    }
+    
+    @Test
+    public void luoVarastonSaldoineenOikein() {
+        varasto = new Varasto(15.0, 8.0);
+
+        assertEquals(15.0, varasto.getTilavuus(), vertailuTarkkuus);
+        assertEquals(8.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void luoKelvottomanVarastoaJosVirheellinenTilavuus() {
+        Varasto testiVarasto = new Varasto(-5.0, 0.0);
+
+        assertEquals(0.0, testiVarasto.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void luoTyhjänVarastonJosNegatiivinenAlkusaldo() {
+        varasto = new Varasto(10.0, -4.0);
+
+        assertEquals(0.0, varasto.getSaldo(), vertailuTarkkuus);
+    }
 }
