@@ -127,6 +127,6 @@ public class VarastoTest {
     public void luoTyhjänVarastonJosNegatiivinenAlkusaldo() {
         varasto = new Varasto(10.0, -4.0);
 
-        assertEquals(1.0, varasto.getSaldo(), vertailuTarkkuus);
+        assertEquals(0.0, varasto.getSaldo(), vertailuTarkkuus);
     }
 }
